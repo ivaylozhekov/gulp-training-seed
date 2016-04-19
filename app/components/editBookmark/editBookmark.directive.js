@@ -1,13 +1,18 @@
 angular.module('components.editBookmark', [
-    'ngMaterial'
 ]).directive('editBookmark', function () {
     return {
+        require:'^bookmarksApp',
         templateUrl: 'app/components/editBookmark/editBookmark.html',
-        scope: true,
-        link: function ( $scope ) {
-            $scope.project = {
-                description: 'Nuclear Missile Defense System',
-                rate: 500
+        scope: {
+            bookmark  : '='
+        },
+        link: function ( scope, element, attr, bookmarkAppCtrl ) {
+            scope.save = function(){
+                bookmarkAppCtrl.saveBookmark(scope.bookmark);
+            };
+
+            scope.clear = function(){
+                bookmarkAppCtrl.clearCurrentBookmark();
             };
         }
     };

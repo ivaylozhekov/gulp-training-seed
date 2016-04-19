@@ -2,13 +2,13 @@
     <div class="container-fluid">
         <h2>Bookmarking App</h2>
         <div class="col-sm-6">
-            <edit-bookmark></edit-bookmark>
+            <edit-bookmark bookmark="currentBookmark"></edit-bookmark>
         </div>
         <div class="col-sm-9">
-            <bookmark-list></bookmark-list>
+            <bookmark-list items="bookmarkList" filter="filter"></bookmark-list>
         </div>
         <div class="col-sm-3">
-            <tag-list></tag-list>
+            <tag-map map="tagMap"></tag-map>
         </div>
     </div>
 </div>

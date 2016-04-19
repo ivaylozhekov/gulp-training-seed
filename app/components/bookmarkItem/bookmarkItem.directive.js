@@ -1,17 +1,18 @@
 angular.module('components.bookmarkItem', [
-    'ngMaterial'
 ]).directive('bookmarkItem', function () {
     return {
+        require:'^bookmarksApp',
         templateUrl: 'app/components/bookmarkItem/bookmarkItem.html',
         scope: {
-            name: '=',
-            url: '=',
-            tags: '='
+            bookmark: '='
         },
-        link: function ( $scope ) {
-            $scope.project = {
-                description: 'Nuclear Missile Defense System',
-                rate: 500
+        link: function ( scope, element, attr, bookmarkAppCtrl) {
+            scope.edit = function(){
+                bookmarkAppCtrl.editBookmark(scope.bookmark);
+            };
+
+            scope.delete = function(){
+                bookmarkAppCtrl.deleteBookmark(scope.bookmark);
             };
         }
     };

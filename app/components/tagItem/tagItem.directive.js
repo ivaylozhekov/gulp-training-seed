@@ -1,5 +1,4 @@
 angular.module('components.tagItem', [
-    'ngMaterial'
 ]).directive('tagItem', function () {
     return {
         templateUrl: 'app/components/tagItem/tagItem.html',

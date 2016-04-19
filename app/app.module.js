@@ -3,19 +3,19 @@ angular.module('sofia-training', [
     'components.editBookmark',
     'components.bookmarkList',
     'components.bookmarkItem',
-    'components.tagList',
+    'components.tagMap',
     'components.tagItem',
     'package-version'
-]).run(function ( $log, $rootScope ) {
-    $rootScope.field1 = 'root';
+]).run(function () {
+
 }).directive('sofiaTraining', function () {
     return { templateUrl: 'app/app.module.html' };
 });
 
-angular.module('gdanskTraining.templates', []);
+angular.module('sofiaTraining.templates', []);
 
 try {
-    angular.module('gdanskTraining-constant');
+    angular.module('sofiaTraining-constant');
 } catch ( error ) {
-    angular.module('gdanskTraining-constant', []).constant('sofiaTrainingVersion', null);
+    angular.module('sofiaTraining-constant', []).constant('sofiaTrainingVersion', null);
 }
