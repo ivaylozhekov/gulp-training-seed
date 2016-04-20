@@ -1,16 +1,15 @@
 angular.module('components.tagItem', [
-]).directive('tagItem', function () {
+]).directive('tagItem', function ($location) {
     return {
         templateUrl: 'app/components/tagItem/tagItem.html',
         scope: {
             name: '=',
             count: '='
         },
-        link: function ( $scope ) {
-            $scope.project = {
-                description: 'Nuclear Missile Defense System',
-                rate: 500
-            };
+        link: function ( scope ) {
+            scope.filter = function(){
+                $location.path('bookmarks/' + scope.name);
+            }
         }
     };
 });

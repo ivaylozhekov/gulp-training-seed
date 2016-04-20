@@ -1,4 +1,5 @@
 angular.module('components.bookmarkItem', [
+    
 ]).directive('bookmarkItem', function () {
     return {
         require:'^bookmarksApp',

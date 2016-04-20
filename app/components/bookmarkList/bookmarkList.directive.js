@@ -1,5 +1,5 @@
 angular.module('components.bookmarkList', [
-]).directive('bookmarkList', function () {
+]).directive('bookmarkList', function ($routeParams) {
     return {
         templateUrl: 'app/components/bookmarkList/bookmarkList.html',
         scope: {
@@ -7,9 +7,12 @@ angular.module('components.bookmarkList', [
             filter: "="
         },
         link: function ( $scope ) {
-            $scope.project = {
-                description: 'Nuclear Missile Defense System',
-                rate: 500
+            $scope.filter = {
+                tag: $routeParams.tagFilter
+            };
+            $scope.clearFilter = function () {
+                $scope.filter.tag= null;
+                $location.path('bookmarks/');
             };
         }
     };

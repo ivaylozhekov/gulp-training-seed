@@ -1,41 +1,21 @@
-angular.module('components.bookmarksApp').controller('BookmarksAppController', function ($scope) {
+angular.module('components.bookmarksApp').controller('BookmarksAppController', function ($scope, $rootScope, mongolabFactory, $location) {
     initializeCurrentBookmark();
     function initializeCurrentBookmark(){
         $scope.currentBookmark = {};
     }
 
-    $scope.filter = {
-        tag: null
-    };
+    $scope.bookmarkList = mongolabFactory.query(extractTagMaps);
 
-    $scope.bookmarkList = [
-        {
-            name: 'jQuery1',
-            id: 0,
-            url: 'http://www.jquery.com',
-            tags: "JavaScript, jQuery, Library"
-        },
-        {
-            name: 'UnderscoreJS',
-            id: 1,
-            url: 'http://www.underscorejs.org',
-            tags: "JavaScript, Library, Underscore"
-        },
-        {
-            name: 'Backbone',
-            id: 2,
-            url: 'http://www.backbonejs.org',
-            tags: "Backbone, JavaScript"
-        }
-    ];
-    extractTagMaps();
     function extractTagMaps(){
         $scope.tagMap = $scope.bookmarkList.reduce(function (map, bookmark) {
-            bookmark.tags.replace(/ /g,'').split(',').forEach(function (tag) {
-                if (map[tag]) {
-                    map[tag]++;
-                } else {
-                    map[tag] = 1;
+            bookmark.tags.split(',').forEach(function (tag) {
+                var _tag = tag.trim();
+                if(_tag.length>0){
+                    if (map[_tag]) {
+                        map[_tag]++;
+                    } else {
+                        map[_tag] = 1;
+                    }
                 }
             });
             return map;
@@ -43,31 +23,35 @@ angular.module('components.bookmarksApp').controller('BookmarksAppController', f
     }
 
     this.editBookmark = function (bookmark) {
-        Object.keys(bookmark).forEach(function(key){
-            $scope.currentBookmark[key] = bookmark[key]
-        });
-
         $scope.currentBookmark = angular.copy(bookmark);
-    }
+    };
 
     this.deleteBookmark = function (bookmark) {
-        initializeCurrentBookmark();
-        $scope.bookmarkList.splice($scope.bookmarkList.indexOf(bookmark), 1);
-    }
+        mongolabFactory.remove({id: bookmark._id.$oid}).$promise.then(function (resource) {
+            $scope.bookmarkList.splice($scope.bookmarkList.indexOf(bookmark), 1);
+            initializeCurrentBookmark();
+            extractTagMaps();
+        });
+    };
 
     this.saveBookmark = function (bookmark) {
         initializeCurrentBookmark();
-        if(bookmark.id){
-            var editedBookmark = $scope.bookmarkList.filter(function(obj){
-                return bookmark.id === obj.id;
-            })[0];
-            angular.extend(editedBookmark, bookmark);
+        if(bookmark._id !== undefined){
+            mongolabFactory.update({id: bookmark._id.$oid}, bookmark).$promise.then(function (resource) {
+                var editedBookmark = $scope.bookmarkList.filter(function (obj) {
+                    return bookmark._id.$oid === obj._id.$oid;
+                })[0];
+                editedBookmark._id = resource._id;
+                angular.extend(editedBookmark, bookmark);
+                extractTagMaps();
+            });
         } else {
-            // TODO: Replace with API call
-            $scope.currentBookmark.id = $scope.bookmarkList.length;
-            $scope.bookmarkList.push(bookmark);
+            mongolabFactory.save(bookmark).$promise.then(function (resource) {
+                bookmark._id = resource._id;
+                $scope.bookmarkList.push(bookmark);
+                extractTagMaps();
+            });
         }
-        extractTagMaps();
     };
 
     this.clearCurrentBookmark = function(){
