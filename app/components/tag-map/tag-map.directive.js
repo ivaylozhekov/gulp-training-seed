@@ -1,7 +1,7 @@
-angular.module('components.tagMap', [
+angular.module('test-app.components.tag-map', [
 ]).directive('tagMap', function () {
     return {
-        templateUrl: 'app/components/tagMap/tagMap.html',
+        templateUrl: 'app/components/tag-map/tag-map.html',
         scope: {
             map: '='
         },

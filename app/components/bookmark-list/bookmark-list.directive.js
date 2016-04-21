@@ -1,7 +1,7 @@
-angular.module('components.bookmarkList', [
-]).directive('bookmarkList', function ($routeParams) {
+angular.module('test-app.components.bookmark-list', [
+]).directive('bookmarkList', function ($routeParams, $location) {
     return {
-        templateUrl: 'app/components/bookmarkList/bookmarkList.html',
+        templateUrl: 'app/components/bookmark-list/bookmark-list.html',
         scope: {
             items: "=",
             filter: "="

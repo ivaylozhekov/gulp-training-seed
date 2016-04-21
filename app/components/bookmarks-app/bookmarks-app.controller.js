@@ -1,10 +1,14 @@
-angular.module('components.bookmarksApp').controller('BookmarksAppController', function ($scope, $rootScope, mongolabFactory, $location) {
+angular.module('test-app.components.bookmarks-app').controller('BookmarksAppController', function ($scope, $rootScope, mongolabFactory, $location) {
     initializeCurrentBookmark();
     function initializeCurrentBookmark(){
         $scope.currentBookmark = {};
+        $scope.tagMap = {};
     }
 
-    $scope.bookmarkList = mongolabFactory.query(extractTagMaps);
+    mongolabFactory.query().$promise.then(function(data){
+        $scope.bookmarkList = data;
+        extractTagMaps();
+    });
 
     function extractTagMaps(){
         $scope.tagMap = $scope.bookmarkList.reduce(function (map, bookmark) {
@@ -37,7 +41,7 @@ angular.module('components.bookmarksApp').controller('BookmarksAppController', f
     this.saveBookmark = function (bookmark) {
         initializeCurrentBookmark();
         if(bookmark._id !== undefined){
-            mongolabFactory.update({id: bookmark._id.$oid}, bookmark).$promise.then(function (resource) {
+            return mongolabFactory.update({id: bookmark._id.$oid}, bookmark).$promise.then(function (resource) {
                 var editedBookmark = $scope.bookmarkList.filter(function (obj) {
                     return bookmark._id.$oid === obj._id.$oid;
                 })[0];
@@ -46,7 +50,7 @@ angular.module('components.bookmarksApp').controller('BookmarksAppController', f
                 extractTagMaps();
             });
         } else {
-            mongolabFactory.save(bookmark).$promise.then(function (resource) {
+            return mongolabFactory.save(bookmark).$promise.then(function (resource) {
                 bookmark._id = resource._id;
                 $scope.bookmarkList.push(bookmark);
                 extractTagMaps();

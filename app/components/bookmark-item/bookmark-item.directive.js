@@ -1,9 +1,9 @@
-angular.module('components.bookmarkItem', [
-    
+angular.module('test-app.components.bookmark-item', [
+
 ]).directive('bookmarkItem', function () {
     return {
         require:'^bookmarksApp',
-        templateUrl: 'app/components/bookmarkItem/bookmarkItem.html',
+        templateUrl: 'app/components/bookmark-item/bookmark-item.html',
         scope: {
             bookmark: '='
         },

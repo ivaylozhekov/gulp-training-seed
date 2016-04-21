@@ -1,10 +1,10 @@
 angular.module('sofia-training', [
-    'components.bookmarksApp',
-    'components.editBookmark',
-    'components.bookmarkList',
-    'components.bookmarkItem',
-    'components.tagMap',
-    'components.tagItem',
+    'test-app.components.bookmarks-app',
+    'test-app.components.edit-bookmark',
+    'test-app.components.bookmark-list',
+    'test-app.components.bookmark-item',
+    'test-app.components.tag-map',
+    'test-app.components.tag-item',
     'package-version',
     'mongolab-factory',
     'ngRoute'
