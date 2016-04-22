@@ -31,7 +31,7 @@ angular.module('test-app.components.bookmarks-app').controller('BookmarksAppCont
     };
 
     this.deleteBookmark = function (bookmark) {
-        mongolabFactory.remove({id: bookmark._id.$oid}).$promise.then(function (resource) {
+        return mongolabFactory.remove({id: bookmark._id.$oid}).$promise.then(function (resource) {
             $scope.bookmarkList.splice($scope.bookmarkList.indexOf(bookmark), 1);
             initializeCurrentBookmark();
             extractTagMaps();

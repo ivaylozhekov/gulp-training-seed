@@ -3,6 +3,7 @@ angular.module('sofia-training', [
     'test-app.components.edit-bookmark',
     'test-app.components.bookmark-list',
     'test-app.components.bookmark-item',
+    'sofiaTraining.templates',
     'test-app.components.tag-map',
     'test-app.components.tag-item',
     'package-version',
