@@ -21,8 +21,6 @@ angular.module('sofia-training', [
         dataBase: 'bookmark_app',
         apiKey: 'OhOFdBA8xQXyRdCvEsPXZTn3_-pLoZyD'
     });
-}).run(function ($location) {
-
 });
 
 //    .directive('sofiaTraining', function () {

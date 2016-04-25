@@ -1,4 +1,4 @@
-describe('test-app.components.bookmarks-list', function () {
+describe('test-app.components.bookmark-list', function () {
 
     beforeEach(module('test-app.components.bookmark-list'));
 
@@ -31,7 +31,7 @@ describe('test-app.components.bookmarks-list', function () {
     var directive;
     var $routeParams;
     beforeEach(inject(function (directiveBuilder, _$routeParams_) {
-        $routeParams = _$routeParams_
+        $routeParams = _$routeParams_;
         directive = directiveBuilder.$build('<bookmark-list items="itemList"></bookmark-list>',{
             itemList: itemList
         });
@@ -40,15 +40,14 @@ describe('test-app.components.bookmarks-list', function () {
     it('should create element and it should not be empty', function () {
         var scope = directive.scope;
         expect(scope.itemList).toBeDefined();
-        //dump(directive.element.html());
+        expect(directive.element.html()).not.toBe('');
     });
 
-    it('should clear filter', inject(function ( $timeout ) {
+    it('should clear filter', inject(function () {
         var scope = directive.element.isolateScope();
         var stateElement = directive.element.child('.filterName');
         scope.filter.tag = 'someFilter';
         scope.$digest();
-        dump(scope.filter)
 
         expect(stateElement.html()).toBe('Filtered By Tag: someFilter');
         directive.element.child('a').triggerHandler('click');
