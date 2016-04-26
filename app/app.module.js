@@ -6,7 +6,6 @@ angular.module('sofia-training', [
     'sofiaTraining.templates',
     'test-app.components.tag-map',
     'test-app.components.tag-item',
-    'package-version',
     'mongolab-factory',
     'ngRoute'
 ]).config(function ($routeProvider) {
